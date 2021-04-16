@@ -1,0 +1,3 @@
+[submodule "misp/files/misp-docker"]
+	path = misp/files/misp-docker
+	url = https://github.com/extra2000/misp-docker.git
