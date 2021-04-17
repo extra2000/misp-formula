@@ -1,0 +1,56 @@
+# -*- coding: utf-8 -*-
+# vim: ft=yaml
+
+misp:
+  lookup:
+    hostuser:
+      name: vagrant
+      group: vagrant
+    pod:
+      network:
+        subnet: 10.77.1.0/24
+        gateway: 10.77.1.1
+        domain_name: mispnet
+        bridge: cni-podman0
+    misp:
+      port:
+        http:
+          container: 80
+          host: 80
+          ip: 0.0.0.0
+        https:
+          container: 443
+          host: 443
+          ip: 0.0.0.0
+      db:
+        host: mysql-pod.mispnet
+        name: misp
+        user:
+          username: misp
+          password: abcde12345
+      admin:
+        email: admin@admin.test
+        passphrase: abcde12345
+      baseurl: ""
+      postfix_relay_host: relay.fqdn
+      timezone: Asia/Kuala_Lumpur
+      resources:
+        requests:
+          memory: 500Mi
+        limits:
+          memory: 500Mi
+    mysql:
+      port:
+        container: 3306
+        host: 3306
+        ip: 0.0.0.0
+      rootpassword: abcde12345
+      dbname: misp
+      user:
+        username: misp
+        password: abcde12345
+      resources:
+        requests:
+          memory: 500Mi
+        limits:
+          memory: 500Mi
