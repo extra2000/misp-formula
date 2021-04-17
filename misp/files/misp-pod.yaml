@@ -1,0 +1,66 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    app: misp-pod
+  name: misp-pod
+spec:
+  restartPolicy: OnFailure
+  containers:
+  - name: misp01
+    image: {{ misp.image.name }}
+    securityContext:
+      allowPrivilegeEscalation: false
+      privileged: false
+      capabilities:
+        add: []
+        drop:
+        - CAP_MKNOD
+        - CAP_NET_RAW
+        - CAP_AUDIT_WRITE
+      seLinuxOptions: {}
+    resources:
+      requests:
+        memory: {{ misp.resources.requests.memory }}
+      limits:
+        memory: {{ misp.resources.limits.memory }}
+    ports:
+    - containerPort: {{ misp.port.http.container }}
+      hostPort: {{ misp.port.http.host }}
+      hostIP: {{ misp.port.http.ip }}
+      protocol: tcp
+    - containerPort: {{ misp.port.https.container }}
+      hostPort: {{ misp.port.https.host }}
+      hostIP: {{ misp.port.https.ip }}
+      protocol: tcp
+    volumeMounts:
+    # - mountPath: /dev/random
+    #   name: urandom
+    - mountPath: /var/www/MISP
+      name: misp-data
+    env:
+      - name: MYSQL_HOST
+        value: {{ misp.db.host }}
+      - name: MYSQL_DATABASE
+        value: {{ misp.db.name }}
+      - name: MYSQL_USER
+        value: {{ misp.db.user.username }}
+      - name: MYSQL_PASSWORD
+        value: {{ misp.db.user.password }}
+      - name: MISP_ADMIN_EMAIL
+        value: {{ misp.admin.email }}
+      - name: MISP_ADMIN_PASSPHRASE
+        value: {{ misp.admin.passphrase }}
+      - name: MISP_BASEURL
+        value: {{ misp.baseurl }}
+      - name: POSTFIX_RELAY_HOST
+        value: {{ misp.postfix_relay_host }}
+      - name: TIMEZONE
+        value: {{ misp.timezone }}
+  volumes:
+  # - name: urandom
+  #   hostPath:
+  #     path: /dev/urandom
+  - name: misp-data
+    persistentVolumeClaim:
+      claimName: misp-data
