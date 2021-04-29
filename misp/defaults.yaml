@@ -42,7 +42,7 @@ misp:
         memory: 500Mi
   mysql:
     image:
-      name: mysql/mysql-server:5.7
+      name: docker.io/mysql/mysql-server:5.7
     port:
       container: 3306
       host: 3306
