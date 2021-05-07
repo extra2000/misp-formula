@@ -4,18 +4,24 @@
 {%- set tplroot = tpldir.split('/')[0] %}
 {%- from tplroot ~ "/map.jinja" import MISP with context %}
 
+{% if MISP.hostuser.name == 'root' %}
+  {% set cni_path = '/etc/cni/net.d/' %}
+{% else %}
+  {% set cni_path = '/home/' + MISP.hostuser.name + '/.config/cni/net.d' %}
+{% endif %}
+
 /opt/misp:
   file.directory:
     - user: {{ MISP.hostuser.name }}
     - group: {{ MISP.hostuser.group }}
 
-/home/{{ MISP.hostuser.name }}/.config/cni/net.d:
+{{ cni_path }}:
   file.directory:
     - user: {{ MISP.hostuser.name }}
     - group: {{ MISP.hostuser.group }}
     - makedirs: true
 
-/home/{{ MISP.hostuser.name }}/.config/cni/net.d/podman-network-mispnet.conflist:
+{{ cni_path }}/podman-network-mispnet.conflist:
   file.managed:
     - source: salt://misp/files/podman-network-mispnet.conflist.jinja
     - user: {{ MISP.hostuser.name }}
