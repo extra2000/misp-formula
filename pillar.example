@@ -3,6 +3,7 @@
 
 misp:
   lookup:
+    projectname: misp
     hostuser:
       name: vagrant
       group: vagrant
@@ -23,7 +24,7 @@ misp:
           host: 443
           ip: 0.0.0.0
       db:
-        host: mysql-pod.mispnet
+        host: misp-mysql-pod.mispnet
         name: misp
         user:
           username: misp

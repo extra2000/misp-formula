@@ -2,8 +2,8 @@ apiVersion: v1
 kind: Pod
 metadata:
   labels:
-    app: misp-pod
-  name: misp-pod
+    app: {{ projectname }}-misp-pod
+  name: {{ projectname }}-misp-pod
 spec:
   restartPolicy: OnFailure
   containers:
@@ -63,4 +63,4 @@ spec:
   #     path: /dev/urandom
   - name: misp-data
     persistentVolumeClaim:
-      claimName: misp-data
+      claimName: {{ projectname }}-misp-data

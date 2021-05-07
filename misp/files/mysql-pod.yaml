@@ -2,8 +2,8 @@ apiVersion: v1
 kind: Pod
 metadata:
   labels:
-    app: mysql-pod
-  name: mysql-pod
+    app: {{ projectname }}-mysql-pod
+  name: {{ projectname }}-mysql-pod
 spec:
   restartPolicy: OnFailure
   containers:
@@ -44,4 +44,4 @@ spec:
   volumes:
   - name: mysql-data
     persistentVolumeClaim:
-      claimName: mysql-data
+      claimName: {{ projectname }}-mysql-data

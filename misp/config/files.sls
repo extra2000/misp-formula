@@ -45,6 +45,7 @@
     - group: {{ MISP.hostuser.group }}
     - template: jinja
     - context:
+      projectname: {{ MISP.projectname }}
       mysql: {{ MISP.mysql }}
 
 /opt/misp/misp-pod.yaml:
@@ -54,4 +55,5 @@
     - group: {{ MISP.hostuser.group }}
     - template: jinja
     - context:
+      projectname: {{ MISP.projectname }}
       misp: {{ MISP.misp }}
